@@ -1,4 +1,5 @@
 import express, { Request, Response } from 'express';
+import { verifyAuthToken } from '../middleware/auth-token';
 import { Order, Order_Class } from '../models/orders';
 
 const OrderObj = new Order_Class();
@@ -15,7 +16,7 @@ const show = async (req: Request, res: Response) => {
 };
 
 const OrdersRoutes = (app: express.Application) => {
-  app.get('/orders/:id', show);
+  app.get('/orders/:id',verifyAuthToken, show);
 };
 
 export default OrdersRoutes;

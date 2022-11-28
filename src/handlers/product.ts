@@ -1,5 +1,6 @@
 import express, { Request, Response } from 'express';
 import { Product, Product_Class } from '../models/products';
+import { verifyAuthToken } from '../middleware/auth-token';
 
 const ProductObj = new Product_Class();
 
@@ -41,7 +42,7 @@ const create = async (req: Request, res: Response) => {
 const productsRoutes = (app: express.Application) => {
   app.get('/products', index);
   app.get('/products/:id', show);
-  app.post('/products', create);
+  app.post('/products', verifyAuthToken, create);
 };
 
 export default productsRoutes;

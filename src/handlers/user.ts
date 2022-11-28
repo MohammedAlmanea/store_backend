@@ -1,6 +1,7 @@
 import express, { Request, Response } from 'express';
 import { UserTable, User } from '../models/users';
 import jwt from 'jsonwebtoken';
+import { verifyAuthToken } from '../middleware/auth-token';
 
 
 const Table = new UserTable();
@@ -49,10 +50,10 @@ const authenticate = async (_req: Request, res: Response) => {
 };
 
 const userRoutes = (app: express.Application) => {
-  app.post('/users', create);
+  app.post('/users', verifyAuthToken, create);
   app.post('/users/authenticate', authenticate);
-  app.get('/users', index);
-  app.get('/users/:id', show);
+  app.get('/users',verifyAuthToken, index);
+  app.get('/users/:id',verifyAuthToken, show);
 };
 
 export default userRoutes;
