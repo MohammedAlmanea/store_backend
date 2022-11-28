@@ -67,4 +67,28 @@ export class UserTable {
       throw new Error(`Can not create user ${error}`);
     }
   }
+  
+  async authenticate(
+    username: string,
+    password: string
+  ): Promise<User[] | null> {
+    try {
+      const sql = 'SELECT password FROM users WHERE username=($1)';
+
+      const conn = await client.connect();
+      const result = await conn.query(sql, [username]);
+
+      if (result.rows.length) {
+        const user = result.rows[0];
+
+        if (bcrypt.compareSync(password + BCRYPT_PASSWORD, user.password)) {
+          return user;
+        }
+      }
+      conn.release();
+      return null;
+    } catch (error) {
+      throw new Error(`Can not authenticate user ${error}`);
+    }
+  }
 }
