@@ -12,7 +12,7 @@ const {
   POSTGRES_TEST_DB,
 } = process.env;
 
-let client;
+export let client : Pool;
 
 if (ENV === 'test') {
   client = new Pool({
@@ -32,4 +32,4 @@ if (ENV === 'dev') {
   });
 }
 
-export default client;
+
