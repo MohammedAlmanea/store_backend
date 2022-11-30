@@ -14,8 +14,10 @@ export const verifyAuthToken = (
       next();
     } else {
       res.status(401);
+      throw new Error(`Not auth`);
     }
   } catch (error) {
     res.status(401);
+    next(error);
   }
 };
