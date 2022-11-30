@@ -17,7 +17,12 @@ const index = async (_req: Request, res: Response) => {
 const show = async (req: Request, res: Response) => {
   try {
     const product = await ProductObj.show(req.params.id);
-    res.json(product);
+    if (product !== null) {
+      res.json(product);
+    } else {
+      res.status(404);
+      res.json(`There is no product with this id!`);
+    }
   } catch (error) {
     res.status(400);
     res.json(error);
