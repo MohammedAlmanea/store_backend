@@ -3,13 +3,16 @@ import { Order_Class} from "../orders";
 const orderObj = new Order_Class();
 
 describe('Order model', () => {
+  describe('Order methods should be defined', () => {
   it('should have a show method', () => {
     expect(orderObj.show).toBeDefined();
   });
   it('should have a create method', () => {
     expect(orderObj.create).toBeDefined();
   });
+});
 
+describe('Order methods should work as expected', () =>{
   it('create method should create an order', async () => {
     const result = await orderObj.create({
       status: 'open',
@@ -30,4 +33,5 @@ describe('Order model', () => {
       user_id: '1'
     }]);
   });
+});
 });
