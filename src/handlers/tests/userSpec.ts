@@ -5,7 +5,7 @@ import app from '../../server';
 
 const request = supertest(app);
 const userObj = new UserTable();
-// Created a test user to get the token 
+// Created a test user to get the token
 const user = {
   first_name: 'test',
   last_name: 'yes',
@@ -15,7 +15,7 @@ const user = {
 let tokenKey: string;
 
 describe('Test User endpoints ', () => {
-  // Before all Create the test user 
+  // Before all Create the test user
   beforeAll(async () => {
     const newUser = await userObj.create(user);
     user.id = newUser.id;
@@ -36,11 +36,11 @@ describe('Test User endpoints ', () => {
       .post('/users/authenticate')
       .set('Content-type', 'application/json')
       .send({
-        last_name: user.last_name,
-        password: user.password
+        last_name: `${user.last_name}`,
+        password: `${user.password}`,
       });
-        // Save the token
-      tokenKey = response.body.token;
+    // Save the token
+    tokenKey = response.body.token;
     expect(response.status).toEqual(200);
   });
 
